@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api/v1/todos")
 public class TodoController {
     private static List<Todo> todoList;
     public TodoController(){
@@ -15,17 +16,27 @@ public class TodoController {
         todoList.add(new Todo(2,true,"Todo 2",2));
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<Todo>>getTodos(){
         return ResponseEntity.ok(todoList);
     }
 
-    @PostMapping("/todos")
+    @PostMapping
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Todo> createTodo(@RequestBody Todo newTodo){
         todoList.add(newTodo);
         return ResponseEntity.status(HttpStatus.CREATED).body(newTodo);
 
+    }
+
+    @GetMapping("/{todoID}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable Long todoID){
+        for(Todo todo:todoList){
+            if(todo.getId()==todoID){
+                return ResponseEntity.ok(todo);
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
