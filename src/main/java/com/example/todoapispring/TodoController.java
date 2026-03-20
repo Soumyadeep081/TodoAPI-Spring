@@ -14,7 +14,6 @@ public class TodoController {
         todoList=new ArrayList<>();
         todoList.add(new Todo(1,false,"Todo 1",1));
         todoList.add(new Todo(2,true,"Todo 2",2));
-
     }
 
     @GetMapping("/todos")
