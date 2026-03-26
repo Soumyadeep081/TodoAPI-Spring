@@ -17,7 +17,7 @@ public class TodoController {
     private static List<Todo> todoList;
 
 
-    public TodoController(@Qualifier("anotherTodoService") TodoService todoService){
+    public TodoController(@Qualifier("fakeTodoService") TodoService todoService){
         this.todoService=todoService;
         todoList=new ArrayList<>();
         todoList.add(new Todo(1,false,"Todo 1",1));
@@ -26,8 +26,7 @@ public class TodoController {
 
     @GetMapping
     public ResponseEntity<List<Todo>>getTodos(@RequestParam(required = false) Boolean isCompleted){
-        System.out.print("Incoming query param "+isCompleted+" ");
-        System.out.println(todoService.functionality());
+        System.out.print("Incoming query param "+isCompleted+" "+this.todoService.functionality());
         return ResponseEntity.ok(todoList);
     }
 
